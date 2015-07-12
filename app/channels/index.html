@@ -1,0 +1,53 @@
+<div class="main container-fluid">
+  <nav class="row">
+    <div class="my-info">
+      <h2>MapChat</h2>
+      <!-- <img class="user-pic" ng-src="{{ channelsCtrl.getGravatar(channelsCtrl.profile.$id) }}" /> -->
+      <div class="user-info">
+        <div class="user-name">
+          {{ channelsCtrl.profile.displayName }}
+        </div>
+
+        <div class="options">
+          <a ui-sref="profile">edit profile</a>
+          /
+          <a href="#" ng-click="channelsCtrl.logout()">logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="row">
+    <div class="sidebar col-md-3">
+      <h1>chats your in</h1>
+      <div class="channel-list">
+        <div class="channel" ng-repeat="channel in channelsCtrl.channels">
+          <a class="chatroom" ui-sref="channels.messages({channelId: channel.$id})" ui-sref-active="selected">{{ channel.name }}</a>
+        </div>
+      </div>
+
+      <!--chat display-->
+      <div class="chattext">
+        <ui-view></ui-view>
+      </div>
+
+      <div>
+        <form ng-submit="channelsCtrl.createChannel()">
+          <h1>Create a chat</h1>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Say Whatever" ng-model="channelsCtrl.newChannel.name">
+          </div>
+          <input type="submit" class="btn btn-default" value="Start Chat">
+        </form>
+      </div>
+
+    </div>
+    <div class="message-pane col-md-9">
+        <map center="current-location" zoom="13" disable-default-u-i="true">
+          <info-window position="current-location" visible="true">
+                <span>{{ messagesCtrl.channelName }}</span>
+          </info-window>
+        </map>
+    </div>
+  </div>
+</div>
